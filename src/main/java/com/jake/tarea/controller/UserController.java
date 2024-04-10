@@ -1,5 +1,5 @@
 package com.jake.tarea.controller;
-import com.jake.tarea.UserService;
+import com.jake.tarea.service.UserService;
 import com.jake.tarea.dto.UserDTO;
 import com.jake.tarea.model.ErrorMessage;
 import com.jake.tarea.model.User;

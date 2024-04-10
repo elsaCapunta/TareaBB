@@ -1,4 +1,4 @@
-package com.jake.tarea;
+package com.jake.tarea.service;
 
 import com.jake.tarea.model.User;
 import com.jake.tarea.repository.UserRepository;
