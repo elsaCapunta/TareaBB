@@ -12,5 +12,6 @@ public class UserDTO {
     private Date created;
     private Date modified;
     private Date lastLogin;
+    private String uuid;
     private boolean isActive;
 }

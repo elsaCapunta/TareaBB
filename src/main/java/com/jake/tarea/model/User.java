@@ -6,18 +6,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.*;
 
 
-
-@Getter
-@Setter
 @Entity
 @Table(name="users")
+@Data
+@AllArgsConstructor
+@Builder
 public class User {
 
     @Id
@@ -49,20 +48,21 @@ public class User {
     @UpdateTimestamp
     private Date lastLogin;
 
+    @Column(name="uuid")
+    private String uuid;
+
     @Column(name="isActive")
     private boolean isActive;
 
-    @PrePersist
-    protected void onCreate() {
-        created = new Date();
-        modified = new Date();
-    }
 
    @OneToMany(cascade = CascadeType.ALL)
    @JoinColumn(name="user_id")
     private List<Phone> phones = new ArrayList<>();
 
     public User() {
+        this.created = new Date();
+        this.modified = new Date();
+        this.uuid = String.valueOf(UUID.randomUUID());
         this.isActive = true;
     }
 }

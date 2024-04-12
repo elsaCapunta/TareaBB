@@ -4,6 +4,7 @@ import com.jake.tarea.dto.UserDTO;
 import com.jake.tarea.model.ErrorMessage;
 import com.jake.tarea.model.User;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("api/users")
+@AllArgsConstructor
 public class UserController {
 
     @Autowired
@@ -32,6 +34,13 @@ public class UserController {
         }
         User createUser = userService.createUser(user);
         UserDTO userDTO = new UserDTO();
+        /*userDTO.setId(createUser.getId());
+        userDTO.setCreated(createUser.getCreated());
+        userDTO.setModified(createUser.getModified());
+        userDTO.setLastLogin(createUser.getLastLogin());
+        userDTO.setUuid(createUser.getUuid());
+        userDTO.setActive(createUser.isActive());*/
+
         BeanUtils.copyProperties(createUser, userDTO);
         return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
