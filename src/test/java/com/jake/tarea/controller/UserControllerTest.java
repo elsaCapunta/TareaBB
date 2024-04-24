@@ -75,7 +75,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.modified").exists())
                 .andExpect(jsonPath("$.lastLogin").exists())
                 .andExpect(jsonPath("$.uuid").value(user.getUuid())) // Comparar con el UUID del objeto user
-                .andExpect(jsonPath("$.isActive").value(user.isActive()));
+                .andExpect(jsonPath("$.active").value(user.isActive()));
     }
 
     @Test

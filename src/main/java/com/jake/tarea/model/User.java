@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
