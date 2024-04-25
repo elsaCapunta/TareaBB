@@ -5,10 +5,12 @@ import com.jake.tarea.model.ErrorMessage;
 import com.jake.tarea.model.User;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,10 +22,13 @@ import java.util.List;
 @Validated
 @RequestMapping("api/users")
 @AllArgsConstructor
+@Slf4j
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    private  final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
@@ -32,14 +37,10 @@ public class UserController {
             ErrorMessage errorMessage = new ErrorMessage("El correo ya registrado");
             return new ResponseEntity<>(errorMessage, HttpStatus.OK);
         }
+        log.info("Clave encriptada: {} :",bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         User createUser = userService.createUser(user);
         UserDTO userDTO = new UserDTO();
-        /*userDTO.setId(createUser.getId());
-        userDTO.setCreated(createUser.getCreated());
-        userDTO.setModified(createUser.getModified());
-        userDTO.setLastLogin(createUser.getLastLogin());
-        userDTO.setUuid(createUser.getUuid());
-        userDTO.setActive(createUser.isActive());*/
 
         BeanUtils.copyProperties(createUser, userDTO);
         return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
