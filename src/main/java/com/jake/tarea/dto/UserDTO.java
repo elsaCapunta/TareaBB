@@ -13,5 +13,6 @@ public class UserDTO {
     private Date modified;
     private Date lastLogin;
     private String uuid;
+    private String token;
     private boolean isActive;
 }

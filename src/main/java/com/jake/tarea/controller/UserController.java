@@ -1,4 +1,5 @@
 package com.jake.tarea.controller;
+import com.jake.tarea.jwt.JWTGenerator;
 import com.jake.tarea.service.UserService;
 import com.jake.tarea.dto.UserDTO;
 import com.jake.tarea.model.ErrorMessage;
@@ -30,6 +31,8 @@ public class UserController {
 
     private  final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final JWTGenerator jwtGenerator;
+
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
 
@@ -42,7 +45,9 @@ public class UserController {
         User createUser = userService.createUser(user);
         UserDTO userDTO = new UserDTO();
 
+        String token = jwtGenerator.getToken(user.getEmail());
         BeanUtils.copyProperties(createUser, userDTO);
+        userDTO.setToken(token);
         return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
 

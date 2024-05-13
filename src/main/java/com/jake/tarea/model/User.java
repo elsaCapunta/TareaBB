@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.util.*;
 
@@ -19,6 +19,8 @@ import java.util.*;
 @AllArgsConstructor
 @Builder
 public class User {
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +36,9 @@ public class User {
 
     @NotNull
     @NotBlank(message = "El campo 'password' es obligatorio")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "El formato del campo 'password' no es válido") //al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un número
+    @Pattern(regexp = "", message = "El formato del campo 'password' no es válido") //al menos 8 caracteres, incluyendo al menos una letra mayúscula, una letra minúscula y un número
     private String password;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false, updatable = false)
     private Date created;
@@ -65,5 +68,6 @@ public class User {
         this.modified = new Date();
         this.uuid = String.valueOf(UUID.randomUUID());
         this.isActive = true;
+
     }
 }
